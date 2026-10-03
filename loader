@@ -1,0 +1,45 @@
+local BASE_URL = "https://raw.githubusercontent.com/kazupaldo/Alienite/refs/heads/main/games/"
+
+local Games = {
+    [74629631798007] = "PetsUniverse.lua",
+}
+
+local PlaceId = game.PlaceId
+local ScriptName = Games[PlaceId]
+
+if ScriptName == nil then
+    warn("[Alienite] Unsupported PlaceId: " .. tostring(PlaceId))
+    return
+end
+
+local URL = BASE_URL .. ScriptName
+
+local Success, Source = pcall(function()
+    return game:HttpGet(URL)
+end)
+
+if not Success then
+    warn("[Alienite] Download failed:", Source)
+    return
+end
+
+if type(Source) ~= "string" or Source == "" then
+    warn("[Alienite] Empty script received.")
+    return
+end
+
+local Script, CompileError = loadstring(Source)
+
+if not Script then
+    warn("[Alienite] Failed to compile:", CompileError)
+    return
+end
+
+local Loaded, RuntimeError = pcall(Script)
+
+if not Loaded then
+    warn("[Alienite] Script error:", RuntimeError)
+    return
+end
+
+print("[Alienite] Successfully loaded:", ScriptName)
