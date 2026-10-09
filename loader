@@ -2,6 +2,7 @@ local BASE_URL = "https://raw.githubusercontent.com/kazupaldo/Alienite/refs/head
 
 local Games = {
     [74629631798007] = "PetsUniverse.lua",
+    [120475074479690] = "StealFromTheRich.lua",
 }
 
 local PlaceId = game.PlaceId
